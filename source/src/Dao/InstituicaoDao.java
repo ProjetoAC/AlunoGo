@@ -1,6 +1,6 @@
-package Dao;
+package dao;
 
-import Model.Instituicao;
+import model.Instituicao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
  * @author Daniel
  */
 public class InstituicaoDao {
+
     Statement st;
 
     public InstituicaoDao() {
@@ -21,17 +22,18 @@ public class InstituicaoDao {
             System.out.println("Erro ao pegar conexao" + ex);
         }
     }
+
     public Instituicao getInstituicaoByID(int id) {
         ResultSet rs;
         Instituicao instituicao;
         try {
-            rs = st.executeQuery("SELECT INSTITUICAOID, NOME, NATURAZA_ADMINISTRATIVA " 
+            rs = st.executeQuery("SELECT INSTITUICAOID, NOME, NATUREZA_ADMNISTRATIVA "
                     + "FROM INSTITUICAO WHERE INSTITUICAOID = " + id);
             while (rs.next()) {
                 instituicao = new Instituicao();
                 instituicao.setInstituicaoid(rs.getInt("INSTITUICAOID"));
                 instituicao.setNome(rs.getString("NOME"));
-                instituicao.setNatureza_administrativa(rs.getString("NATURAZA_ADMINISTRATIVA"));
+                instituicao.setNatureza_administrativa(rs.getString("NATURAZA_ADMNISTRATIVA"));
                 return instituicao;
             }
         } catch (SQLException ex) {
@@ -39,6 +41,7 @@ public class InstituicaoDao {
         }
         return null;
     }
+
     public boolean insereInstituicao(Instituicao instituicao) {
         String sql = "";
         ResultSet rs;
@@ -51,7 +54,7 @@ public class InstituicaoDao {
                 id = rs.getInt("INSTITUICAOID");
             }
             instituicao.setInstituicaoid(id);
-            sql = "INSERT INTO instituicao( instituicaoid, nome, natureza_administrativa "
+            sql = "INSERT INTO instituicao( instituicaoid, nome, natureza_admnistrativa)"
                     + "VALUES (" + instituicao.getInstituicaoid()
                     + ", '" + instituicao.getNome()
                     + "', '" + instituicao.getNatureza_administrativa()
@@ -64,11 +67,12 @@ public class InstituicaoDao {
         }
         return false;
     }
+
     public boolean updateInstituicao(Instituicao instituicao) {
         String sql = "UPDATE alunos SET "
                 + "instituicaoid=" + instituicao.getInstituicaoid() + ", "
                 + "nome='" + instituicao.getNome() + "', "
-                + "natureza_administrativa='" + instituicao.getNatureza_administrativa() + "', "
+                + "natureza_admnistrativa='" + instituicao.getNatureza_administrativa() + "', "
                 + "WHERE instituicaoid=" + instituicao.getInstituicaoid() + ";";
         try {
             st.executeUpdate(sql);
@@ -79,26 +83,28 @@ public class InstituicaoDao {
         }
         return false;
     }
+
     public ArrayList<Instituicao> getInstituicoes() {
         ResultSet rs;
         Instituicao instituicao;
         ArrayList<Instituicao> lista = new ArrayList<>();
         try {
-            rs = st.executeQuery("SELECT INSTITUICAOID, NOME, NATUREZA_ADMINISTRATIVA"
+            rs = st.executeQuery("SELECT INSTITUICAOID, NOME, NATUREZA_ADMNISTRATIVA"
                     + " FROM INSTITUICAO");
             while (rs.next()) {
                 instituicao = new Instituicao();
                 instituicao.setInstituicaoid(rs.getInt("INSTITUICAOID"));
                 instituicao.setNome(rs.getString("NOME"));
-                instituicao.setNatureza_administrativa(rs.getString("NATUREZA_ADMINISTRATIVA"));
+                instituicao.setNatureza_administrativa(rs.getString("NATUREZA_ADMNISTRATIVA"));
                 lista.add(instituicao);
             }
         } catch (SQLException ex) {
-            System.out.println("Erro de consulta" + ex);
+            System.out.println("Erro de consulta " + ex);
             JOptionPane.showMessageDialog(null, "Erro:" + ex);
         }
         return lista;
     }
+
     public boolean deleteInstituicao(int id) {
         String sql = "DELETE FROM INSTITUICAO WHERE INSTITUICAOID = " + id;
         try {
@@ -110,4 +116,46 @@ public class InstituicaoDao {
         }
         return false;
     }
+
+    public ArrayList<Instituicao> getInstituicoesByName(String texto) {
+        ResultSet rs;
+        Instituicao instituicao;
+        ArrayList<Instituicao> lista = new ArrayList<Instituicao>();
+        try {
+            rs = st.executeQuery("SELECT INSTITUICAOID, NOME, NATUREZA_ADMNISTRATIVA "
+                    + "FROM INSTITUICAO WHERE NOME LIKE LOWER('%" + texto + "%')");
+            while (rs.next()) {
+                instituicao = new Instituicao();
+                instituicao.setInstituicaoid(rs.getInt("INSTITUICAOID"));
+                instituicao.setNome(rs.getString("NOME"));
+                instituicao.setNatureza_administrativa(rs.getString("NATUREZA_ADMNISTRATIVA"));
+                lista.add(instituicao);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Erro de consulta " + ex);
+            JOptionPane.showMessageDialog(null, "Erro:" + ex);
+        }
+        return lista;
+    }
+
+    public Instituicao getInstituicoesById(int id) {
+        ResultSet rs;
+        Instituicao instituicao;
+        try {
+            rs = st.executeQuery("SELECT INSTITUICAOID, NOME, NATUREZA_ADMNISTRATIVA "
+                    + "FROM INSTITUICAO WHERE INSTITUICAOID = " + id);
+            while (rs.next()) {
+                instituicao = new Instituicao();
+                instituicao.setInstituicaoid(rs.getInt("INSTITUICAOID"));
+                instituicao.setNome(rs.getString("NOME"));
+                instituicao.setNatureza_administrativa(rs.getString("NATUREZA_ADMNISTRATIVA"));
+                return instituicao;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Erro de consulta " + ex);
+            JOptionPane.showMessageDialog(null, "Erro:" + ex);
+        }
+        return null;
+    }
+
 }

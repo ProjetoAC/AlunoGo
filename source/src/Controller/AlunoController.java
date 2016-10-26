@@ -1,7 +1,7 @@
-package Controller;
+package controller;
 
-import Dao.AlunoDao;
-import Model.Aluno;
+import dao.AlunoDao;
+import model.Aluno;
 import java.util.ArrayList;
 
 /**
@@ -26,11 +26,17 @@ public class AlunoController {
         }
     }
 
-    public ArrayList<Aluno> getAlunos() {
-        return alunoDao.getAlunos();
+    public ArrayList<Aluno> getAlunos(String texto) {
+        return alunoDao.getAlunos(texto);
     }
 
     public boolean deleteAluno(int id) {
         return alunoDao.deleteAluno(id);
+    }
+    public boolean atualizaAluno(Aluno aluno){
+        if (aluno.getAlunoid() != 0) {
+            return alunoDao.updateAluno(aluno);
+        }
+        return true;
     }
 }

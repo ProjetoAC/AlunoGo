@@ -1,7 +1,7 @@
-package Controller;
+package controller;
 
-import Dao.InstituicaoDao;
-import Model.Instituicao;
+import dao.InstituicaoDao;
+import model.Instituicao;
 import java.util.ArrayList;
 
 /**
@@ -9,6 +9,7 @@ import java.util.ArrayList;
  * @author Daniel
  */
 public class InstituicaoController {
+
     InstituicaoDao instituicaoDao;
 
     public InstituicaoController() {
@@ -30,7 +31,17 @@ public class InstituicaoController {
         return instituicaoDao.getInstituicoes();
     }
 
+    public ArrayList<Instituicao> getInstituicoesByName(String texto) {
+        return instituicaoDao.getInstituicoesByName(texto);
+    }
+
+    public Instituicao getInstituicoesById(int id) {
+        return instituicaoDao.getInstituicoesById(id);
+    }
+    
+    
     public boolean deleteInstituicao(int id) {
         return instituicaoDao.deleteInstituicao(id);
     }
+
 }

@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 /**
  *
@@ -6,7 +6,26 @@ package Model;
  */
 public class Relatorio {
     private int Relatorioid;
+    private int alunoid;
     private String Ata;
+    private String Titulo;
+
+    public String getTitulo() {
+        return Titulo;
+    }
+
+    public void setTitulo(String Titulo) {
+        this.Titulo = Titulo;
+    }
+
+    public int getAlunoid() {
+        return alunoid;
+    }
+
+    public void setAlunoid(int alunoid) {
+        this.alunoid = alunoid;
+    }
+
 
     public int getRelatorioid() {
         return Relatorioid;
